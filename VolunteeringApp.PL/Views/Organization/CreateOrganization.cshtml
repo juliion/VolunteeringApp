@@ -1,0 +1,49 @@
+﻿@model VolunteeringApp.PL.ViewModels.Organization.CreateOrganizationViewModel
+@{
+    ViewData["Title"] = "Create Organization";
+}
+<div class="container">
+    <div class="create-org-form-container">
+        <h1>Створити організацію</h1>
+        <form method="post" asp-controller="Organization" asp-action="CreateOrganization">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Name">Назва:</label>
+                <input asp-for="Name" type="text" required>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Офіційна пошта:</label>
+                <input asp-for="Email" type="email" required>
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Офіційний номер:</label>
+                <input asp-for="PhoneNumber" type="text" required>
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Опис:</label>
+                <textarea class="desc-org-input" asp-for="Description"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City">Місто:</label>
+                <input asp-for="City" type="text" required>
+                <span asp-validation-for="City"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address">Адреса:</label>
+                <input asp-for="Address" type="text" required>
+                <span asp-validation-for="Address"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PicturePath">Фото:</label>
+                <input class="load-org-pic" asp-for="PicturePath" type="file" required>
+                <span asp-validation-for="PicturePath"></span>
+            </div>
+            <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+            <button class="submit-btn" type="submit">Відправити на перевірку</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="~/img/logo.jpg" alt="Logo">
+            <h1>VolunteeringApp</h1>
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <ul>
+                <li class="user">@User.Identity.Name</li>
+                <li>
+                    <form class="logout" method="post" asp-controller="Account" asp-action="Logout">
+                        <input type="submit" value="Вихід" />
+                    </form>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul>
+                <li>
+                    <a asp-controller="Account" asp-action="Login">Увійти</a>
+                </li>
+            </ul>
+        }
+        
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

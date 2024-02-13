@@ -1,8 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_LayoutHome";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Вітаємо на VolunteeringApp</h1>
+            <p>Онлайн-платформа, яка об'єднує волонтерів та організації.Об'єднаймо сили, Змінемо життя на краще!</p>
+            <div class="register-btns">
+                <a asp-controller="Account" asp-action="Register" style="color: #ffffff;">Стати волонтером 🫶</a>
+                <a style="color: #ffffff;">Знайти волонтера 🔎</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="~/img/home-pic.png" alt="Home Image">
+        </div>
+    </div>
 </div>
