@@ -1,9 +1,10 @@
 ﻿using VolunteeringApp.BLL.DTOs.User;
 using VolunteeringApp.DLL.Enums;
+using VolunteeringApp.PL.ViewModels.User;
 
-namespace VolunteeringApp.BLL.DTOs.Organization;
+namespace VolunteeringApp.PL.ViewModels.Organization;
 
-public class OrganizationDTO
+public class OrganizationViewModel
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
@@ -16,5 +17,5 @@ public class OrganizationDTO
     public string? PicturePath { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public UserDTO User { get; set; } = null!;
+    public UserViewModel User { get; set; } = null!;
 }

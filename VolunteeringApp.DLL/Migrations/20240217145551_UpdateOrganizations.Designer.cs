@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VolunteeringApp.DLL;
@@ -11,9 +12,10 @@ using VolunteeringApp.DLL;
 namespace VolunteeringApp.DLL.Migrations
 {
     [DbContext(typeof(VolunteeringAppDbContext))]
-    partial class VolunteeringAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240217145551_UpdateOrganizations")]
+    partial class UpdateOrganizations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

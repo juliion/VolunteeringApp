@@ -1,0 +1,76 @@
+﻿@using VolunteeringApp.DLL.Enums
+@model VolunteeringApp.PL.ViewModels.Organization.OrganizationViewModel
+@{
+    ViewData["Title"] = @Model.Name + " Details";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="org-name-header">
+    <h1>@Model.Name Details</h1>
+</div>
+
+<div class="organization-details">
+    <table class="org-info-table">
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>@Model.PhoneNumber</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@Model.Description</td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td>@Model.City</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>@Model.Address</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>@Model.Status</td>
+        </tr>
+        <tr>
+            <th>Picture</th>
+            <td><img src="@Model.PicturePath" alt="@Model.Name"></td>
+        </tr>
+    </table>
+    <table class="user-info-table">
+        <tr>
+            <th>User Email</th>
+            <td>@Model.User.Email</td>
+        </tr>
+        <tr>
+            <th>User Name</th>
+            <td>@Model.User.Name</td>
+        </tr>
+        <tr>
+            <th>User Surname</th>
+            <td>@Model.User.Surname</td>
+        </tr>
+        <tr>
+            <th>User Phone Number</th>
+            <td>@Model.User.PhoneNumber</td>
+        </tr>
+    </table>
+    
+</div>
+<div class="action-buttons actions-details">
+    <button class="aproveBtn" data-id="@Model.Id" @(Model.Status == Status.Accepted ? "disabled" : "")>Схвалити</button>
+    <button class="rejectedBtn" data-id="@Model.Id" @(Model.Status == Status.Rejected ? "disabled" : "")>Відхилити</button>
+    <a href="@Url.Action("OrganizationsManagement", "Admin")">Back to List</a>
+</div>
+
+@section scripts {
+    <script src="~/js/organizationActions.js"></script>
+}
+

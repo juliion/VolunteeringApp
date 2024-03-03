@@ -1,6 +1,6 @@
-﻿namespace VolunteeringApp.BLL.DTOs.User;
+﻿namespace VolunteeringApp.PL.ViewModels.User;
 
-public class UserDTO
+public class UserViewModel
 {
     public Guid Id { get; set; }
     public string Email { get; set; } = null!;

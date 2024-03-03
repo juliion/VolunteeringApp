@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+</head>
+<body>
+    <div class="menu">
+        <div class="logo">
+            <img src="~/img/logo.jpg" alt="Logo">
+            <h1>VolunteeringApp</h1>
+        </div>
+        <ul>
+            <li>
+                <a asp-controller="Admin" asp-action="OrganizationsManagement">Керувати організаціями</a>
+            </li>
+            <li>
+                <a asp-controller="Admin" asp-action="OrganizationsManagement">Керувати пропозиціями</a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://kit.fontawesome.com/1f40eea681.js" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

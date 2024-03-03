@@ -8,24 +8,27 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
 {
     public void Configure(EntityTypeBuilder<Organization> builder)
     {
-        builder.Property(user => user.Name)
+        builder.Property(org => org.Name)
             .HasMaxLength(100)
             .IsRequired();
-        builder.Property(user => user.Email)
+        builder.Property(org => org.Email)
             .HasMaxLength(100)
             .IsRequired();
-        builder.Property(user => user.PhoneNumber)
+        builder.Property(org => org.PhoneNumber)
             .HasMaxLength(13);
-        builder.Property(user => user.Description)
+        builder.Property(org => org.Description)
             .IsRequired();
-        builder.Property(user => user.City)
+        builder.Property(org => org.City)
             .HasMaxLength(100)
             .IsRequired();
-        builder.Property(user => user.Address)
+        builder.Property(org => org.Address)
             .IsRequired();
-        builder.Property(user => user.Verified)
+        builder.Property(org => org.Status)
             .IsRequired();
-
+        builder.Property(org => org.CreatedAt)
+            .IsRequired();
+        builder.Property(org => org.UpdatedAt)
+            .IsRequired();
         builder.HasOne(o => o.User)
             .WithMany(u => u.Organizations)
             .HasForeignKey(o => o.UserId)

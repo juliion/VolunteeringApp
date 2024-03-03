@@ -20,8 +20,6 @@ public class OrganizationController : Controller
     [HttpGet]
     public IActionResult CreateOrganization(Guid userId)
     {
-        Console.WriteLine($"test-0 {userId}");
-
         var organizationViewModel = new CreateOrganizationViewModel
         {
             UserId = userId
@@ -36,9 +34,7 @@ public class OrganizationController : Controller
         {
             return View("CreateOrganization", organizationViewModel);
         }
-        Console.WriteLine($"test-1 {organizationViewModel.UserId}");
         var orgDto = _mapper.Map<CreateOrganizationViewModel, CreateOrganizationDTO>(organizationViewModel);
-        Console.WriteLine($"test-2 {orgDto.UserId}");
 
         await _organizationService.Add(orgDto);
         return RedirectToAction("Index", "Home");

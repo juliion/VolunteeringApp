@@ -1,0 +1,136 @@
+﻿@using VolunteeringApp.BLL.DTOs.Organization
+@using VolunteeringApp.DLL.Enums
+@model VolunteeringApp.PL.ViewModels.Organization.FilteredOrganizationsViewModel
+@{
+    ViewData["Title"] = "Organizations Management";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-table">
+    <div class="filters">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="filter-search">
+                    <input type="text" class="form-control" id="searchFilter" placeholder="Пошук організації..."/>
+                    <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="sortFilter">Сортувати за:</label>
+                <select class="filter-select" id="sortFilter" name="sortFilter">
+                    <option value="CreatedAt">Дата</option>
+                    <option value="Name">Ім'я</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="statusFilter">Статус:</label>
+                <select class="filter-select" id="statusFilter" name="statusFilter">
+                    <option value="">All</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button class="btn-apply-filters" type="button" id="applyFiltersBtn">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+    <table id="organizationTable" class="display">
+        <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Статус</th>
+                <th>Дата</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var organization in Model.Organizations)
+            {
+                <tr>
+                    <td>@organization.Name</td>
+                    <td>@organization.Status</td>
+                    <td>@organization.CreatedAt</td>
+                    <td class="action-buttons">
+                        <button class="aproveBtn" data-id="@organization.Id" @(organization.Status == Status.Accepted ? "disabled" : "")>Схвалити</button>
+                        <button class="rejectedBtn" data-id="@organization.Id" @(organization.Status == Status.Rejected ? "disabled" : "")>Відхилити</button>
+                        <a href="@Url.Action("Details", "Admin", new { id = organization.Id })">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                @for (int i = 0; i < Math.Ceiling((double)Model.Total / Model.Take); i++)
+                {
+                    <li class="page-item @(i == Model.Skip / Model.Take ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("OrganizationsManagement", new OrganizationsQueryFilters { Skip = i * Model.Take, Take = Model.Take })">@((i + 1).ToString())</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            
+            function getQueryParam(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            if (!getQueryParam('SortColumn')) {
+                $('#sortFilter').val('CreatedAt');
+            } else {
+                $('#sortFilter').val(getQueryParam('SortColumn'));
+            }
+
+            $('#statusFilter').val(getQueryParam('Status'));
+            $('#searchFilter').val(getQueryParam('Search'));
+
+            function applyFilters() {
+                var sortColumn = $('#sortFilter').val();
+                var status = $('#statusFilter').val();
+                var search = $('#searchFilter').val();
+
+                var newUrl = updateQueryStringParameter(window.location.href, 'SortColumn', sortColumn);
+                newUrl = updateQueryStringParameter(newUrl, 'Status', status);
+                newUrl = updateQueryStringParameter(newUrl, 'Search', search);
+
+                // Redirect to the new URL
+                window.location.href = newUrl;
+            }
+            
+            function updateQueryStringParameter(uri, key, value) {
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    return uri.replace(re, '$1' + key + "=" + value + '$2');
+                } else {
+                    return uri + separator + key + "=" + value;
+                }
+            }
+
+            $('#applyFiltersBtn').click(() => {
+                applyFilters();
+            });
+
+            $('#search-btn').click(() => {
+                applyFilters();
+            });
+            // $('#searchFilter').keypress((e) => {
+            //     if (e.which === 3) { // Enter key
+            //         applyFilters();
+            //     }
+            // });
+        });
+    </script>
+    <script src="~/js/organizationActions.js"></script>
+}
