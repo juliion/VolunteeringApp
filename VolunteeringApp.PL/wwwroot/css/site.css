@@ -217,7 +217,7 @@ input[type="password"],
     margin: 40px 100px;
 }
 
-#organizationTable {
+#organizationTable, #categoriesTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -259,7 +259,29 @@ tr:hover {
     color: white;
 }
 
+.editCategoryBtn {
+    background-color: #f4f4f4;
+}
+
+.deleteCategoryBtn {
+    background-color: #b33636;
+    color: white;
+}
+
+.addCategoryBtn {
+    background-color: #36B37E;
+    color: white;
+}
+.saveCategoryBtn {
+    background-color: #36B37E;
+    color: white;
+}
+
 .rejectedBtn:hover {
+    background-color: #9e2f2f;
+}
+
+.deleteCategoryBtn:hover {
     background-color: #9e2f2f;
 }
 
@@ -271,9 +293,28 @@ tr:hover {
     background-color: #2F9E6D;
 }
 
+.saveCategoryBtn:hover {
+    background-color: #2F9E6D;
+}
+.addCategoryBtn:hover {
+    background-color: #2F9E6D;
+}
+
+.editCategoryBtn:hover {
+    background-color: #d9d9d9;
+}
+
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    color: #2F9E6D;
+}
+
 .aproveBtn:disabled, .rejectedBtn:disabled {
-    /* Add styles for disabled state */
-    opacity: 0.7; /* You can adjust the opacity or add other styles as needed */
+    opacity: 0.7; 
     cursor: not-allowed;
 }
 

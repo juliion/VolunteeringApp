@@ -6,6 +6,8 @@ using VolunteeringApp.BLL.Services;
 using VolunteeringApp.BLL.DTOs.Organization;
 using VolunteeringApp.DLL.Enums;
 using Microsoft.Extensions.Primitives;
+using VolunteeringApp.BLL.DTOs.Category;
+using VolunteeringApp.PL.ViewModels.Category;
 
 namespace VolunteeringApp.PL.Api;
 
@@ -15,19 +17,43 @@ public class AdminController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IOrganizationService _organizationService;
+    private readonly ICategoryService _categoryService;
 
-    public AdminController(IMapper mapper, IOrganizationService organizationService)
+    public AdminController(IMapper mapper, IOrganizationService organizationService, ICategoryService categoryService)
     {
         _mapper = mapper;
         _organizationService = organizationService;
+        _categoryService = categoryService;
     }
     [HttpPost("ChangeOrganizationStatus")]
     public async Task<IActionResult> ChangeOrganizationStatus(Guid organizationId, string status)
     {
-        if (Enum.TryParse(status, out Status statusEnum))
+        if (Enum.TryParse(status, out OrganizationStatus statusEnum))
         {
             await _organizationService.Update(organizationId, new UpdateOrganizationDTO { Status = statusEnum });
         }
+        return Ok();
+    }
+    [HttpPost("AddCategory")]
+    public async Task<IActionResult> AddCategory(CreateCategoryViewModel categoryViewModel)
+    {
+        var categoryDto = _mapper.Map<CreateCategoryViewModel, CreateCategoryDTO>(categoryViewModel);
+
+        await _categoryService.Add(categoryDto);
+        return Ok();
+    }
+    [HttpDelete("DeleteCategory/{categoryId}")]
+    public async Task<IActionResult> DeleteCategory(Guid categoryId)
+    {
+        await _categoryService.Delete(categoryId);
+        return Ok();
+    }
+    [HttpPut("EditCategory/{categoryId}")]
+    public async Task<IActionResult> EditCategory(Guid categoryId, UpdateCategoryViewModel categoryViewModel)
+    {
+        var categoryDto = _mapper.Map<UpdateCategoryViewModel, UpdateCategoryDTO>(categoryViewModel);
+
+        await _categoryService.Update(categoryId, categoryDto);
         return Ok();
     }
 }

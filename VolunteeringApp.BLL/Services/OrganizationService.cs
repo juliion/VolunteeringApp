@@ -22,7 +22,7 @@ public class OrganizationService : IOrganizationService
     public async Task<Guid> Add(CreateOrganizationDTO organizationDTO)
     {
         var newOrganization = _mapper.Map<CreateOrganizationDTO, Organization>(organizationDTO);
-        newOrganization.Status = Status.Pending;
+        newOrganization.Status = OrganizationStatus.Pending;
         newOrganization.CreatedAt = DateTime.Now.ToUniversalTime();
         newOrganization.UpdatedAt = DateTime.Now.ToUniversalTime();
 

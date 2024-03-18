@@ -54,9 +54,9 @@
                     <td>@organization.Status</td>
                     <td>@organization.CreatedAt</td>
                     <td class="action-buttons">
-                        <button class="aproveBtn" data-id="@organization.Id" @(organization.Status == Status.Accepted ? "disabled" : "")>Схвалити</button>
-                        <button class="rejectedBtn" data-id="@organization.Id" @(organization.Status == Status.Rejected ? "disabled" : "")>Відхилити</button>
-                        <a href="@Url.Action("Details", "Admin", new { id = organization.Id })">Details</a>
+                        <button class="aproveBtn" data-id="@organization.Id" @(organization.Status == OrganizationStatus.Accepted ? "disabled" : "")>Схвалити</button>
+                        <button class="rejectedBtn" data-id="@organization.Id" @(organization.Status == OrganizationStatus.Rejected ? "disabled" : "")>Відхилити</button>
+                        <a href="@Url.Action("OrganizationDetails", "Admin", new { id = organization.Id })">Details</a>
                     </td>
                 </tr>
             }

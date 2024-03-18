@@ -8,6 +8,8 @@ namespace VolunteeringApp.DLL;
 public class VolunteeringAppDbContext : IdentityDbContext<User, Role, Guid>
 {
     public DbSet<Organization> Organizations { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Opportunity> Opportunities { get; set; }
     public VolunteeringAppDbContext(DbContextOptions<VolunteeringAppDbContext> opt)
         : base(opt) { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,5 +17,7 @@ public class VolunteeringAppDbContext : IdentityDbContext<User, Role, Guid>
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new OpportunityConfiguration());
     }
 }

@@ -11,6 +11,6 @@ public class UpdateOrganizationDTO
     public string? Description { get; set; }
     public string? City { get; set; }
     public string? Address { get; set; }
-    public Status? Status { get; set; }
+    public OrganizationStatus? Status { get; set; }
     public string? PicturePath { get; set; }
 }

@@ -13,7 +13,7 @@ public class OrganizationViewModel
     public string Description { get; set; } = null!;
     public string City { get; set; } = null!;
     public string Address { get; set; } = null!;
-    public Status Status { get; set; }
+    public OrganizationStatus Status { get; set; }
     public string? PicturePath { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

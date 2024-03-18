@@ -65,8 +65,8 @@
     
 </div>
 <div class="action-buttons actions-details">
-    <button class="aproveBtn" data-id="@Model.Id" @(Model.Status == Status.Accepted ? "disabled" : "")>Схвалити</button>
-    <button class="rejectedBtn" data-id="@Model.Id" @(Model.Status == Status.Rejected ? "disabled" : "")>Відхилити</button>
+    <button class="aproveBtn" data-id="@Model.Id" @(Model.Status == OrganizationStatus.Accepted ? "disabled" : "")>Схвалити</button>
+    <button class="rejectedBtn" data-id="@Model.Id" @(Model.Status == OrganizationStatus.Rejected ? "disabled" : "")>Відхилити</button>
     <a href="@Url.Action("OrganizationsManagement", "Admin")">Back to List</a>
 </div>
 

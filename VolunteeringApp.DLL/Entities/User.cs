@@ -8,4 +8,5 @@ public class User : IdentityUser<Guid>
     public string Surname { get; set; } = null!;
 
     public ICollection<Organization> Organizations { get; set; } = new List<Organization>();
+    public ICollection<Opportunity> Opportunities { get; set; } = new List<Opportunity>();
 }

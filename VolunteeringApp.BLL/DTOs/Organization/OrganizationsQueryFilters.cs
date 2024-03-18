@@ -9,5 +9,5 @@ public class OrganizationsQueryFilters
     public string SortColumn { get; set; } = "CreatedAt";
     public string? Search { get; set; }
     public string Order { get; set; } = "desc";
-    public Status? Status { get; set; }
+    public OrganizationStatus? Status { get; set; }
 }
