@@ -1,0 +1,141 @@
+﻿@using VolunteeringApp.PL.ViewModels.Enums
+@model VolunteeringApp.PL.ViewModels.Opportunity.CreateOpportunityViewModel
+@{
+    ViewData["Title"] = "Create Opportunity";
+    Layout = "_LayoutMain";
+}
+<div class="container">
+    <div class="create-opportunity-form-container">
+        <h1>Створити можливість</h1>
+        <form method="post" asp-controller="Opportunity" asp-action="CreateOpportunity">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Name">Назва:</label>
+                <input asp-for="Name" type="text" required>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label for="organizerType" asp-for="OrganizerType">Організатор:</label>
+                <select class="form-select" id="organizerType" asp-for="OrganizerType">
+                    <option value="@OrganizerType.User">@ViewBag.User.Email</option>
+                    @if (@ViewBag.UserOrganization != null)
+                    {
+                        <option value="@OrganizerType.Organization">Організація: @ViewBag.UserOrganization.Name </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId">Категорія:</label>
+                <select class="form-select" asp-for="CategoryId" required>
+                    <option value="">Оберіть категорію</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Опис:</label>
+                <textarea class="desc-opportunity-input" asp-for="Description"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+            <div class="form-group start-end-time">
+                <div class="input-group">
+                    <label asp-for="StartTime">Дата початку:</label>
+                    <input asp-for="StartTime" type="datetime-local" required>
+                    <span asp-validation-for="StartTime"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="EndTime">Дата закінченя:</label>
+                    <input asp-for="EndTime" type="datetime-local" required>
+                    <span asp-validation-for="EndTime"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationDeadline">Кінцева дата подачі заявок:</label>
+                <input class="application-deadline-input" asp-for="ApplicationDeadline" type="datetime-local" required>
+                <span asp-validation-for="ApplicationDeadline"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormForApplicationsPath">Посилання на форму для подачі заявок:</label>
+                <input asp-for="FormForApplicationsPath" type="text">
+                <span asp-validation-for="FormForApplicationsPath"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactsForApplications">Контакти для подачі заявок:</label>
+                <textarea class="contacts-input" asp-for="ContactsForApplications"></textarea>
+                <span asp-validation-for="ContactsForApplications"></span>
+            </div>
+            <div class="form-group">
+                <label>Локація:</label>
+                <div class="form-check">
+                    <input type="checkbox" id="remotelyCheckbox" asp-for="Location" name="Location" value="Remotely">
+                    <label for="remotelyCheckbox">Дистанційно</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="allUkraineCheckbox" asp-for="Location" name="Location" value="AllUkraine">
+                    <label for="allUkraineCheckbox">Вся Україна</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="addLocationCheckbox" asp-for="Location" name="Location" value="AddLocation">
+                    <label for="addLocationCheckbox">Додати локацію</label>
+                </div>
+                <div id="newLocationField" style="display: none;">
+                    <label asp-for="Location">Додайте локацію:</label>
+                    <input type="text" asp-for="Location">
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PicturePath">Фото:</label>
+                <input class="load-opportunity-pic" asp-for="PicturePath" type="file" required>
+                <span asp-validation-for="PicturePath"></span>
+            </div>
+
+            <button class="submit-btn" type="submit">Відправити на перевірку</button>
+        </form>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            const locationCheckboxes = $('input[type="checkbox"][name="Location"]');
+            const addLocationCheckbox = $('#addLocationCheckbox');
+            const newLocationField = $('#newLocationField');
+
+            // Function to update the value of the Location field
+            const updateLocationFieldValue = () => {
+                if (addLocationCheckbox.prop('checked')) {
+                    $('input[name="Location"]').val(newLocationField.find('input').val());
+                } else {
+                    $('input[name="Location"]').val('');
+                }
+            };
+
+            newLocationField.toggle(addLocationCheckbox.prop('checked'));
+            updateLocationFieldValue();
+
+            locationCheckboxes.change(function () {
+                locationCheckboxes.not(this).prop('checked', false);
+
+                if ($(this).val() !== 'AddLocation') {
+                    newLocationField.hide();
+                    updateLocationFieldValue();
+                }
+                if ($(this).val() === 'AddLocation') {
+                    newLocationField.toggle(this.checked);
+                    updateLocationFieldValue();
+                }
+            });
+
+            addLocationCheckbox.change(() => {
+                newLocationField.toggle(addLocationCheckbox.prop('checked'));
+                updateLocationFieldValue();
+            });
+
+            newLocationField.find('input').on('input', () => {
+                updateLocationFieldValue();
+            });
+        });
+    </script>
+}

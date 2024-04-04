@@ -78,6 +78,14 @@ public class CategoryService : ICategoryService
         return filteredCategories;
     }
 
+    public async Task<List<CategoryDTO>> GetAll()
+    {
+        var categories = await _context.Categories.ToListAsync();
+        var categoriesDTOs = _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
+
+        return categoriesDTOs;
+    }
+
     public async Task Update(Guid id, UpdateCategoryDTO categoryDTO)
     {
         var category = await _context.Categories.FindAsync(id);

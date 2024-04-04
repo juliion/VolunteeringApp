@@ -1,10 +1,10 @@
 ﻿using VolunteeringApp.DLL.Enums;
+using VolunteeringApp.PL.ViewModels.Enums;
 
-namespace VolunteeringApp.DLL.Entities;
+namespace VolunteeringApp.PL.ViewModels.Opportunity;
 
-public class Opportunity
+public class CreateOpportunityViewModel
 {
-    public Guid Id { get; set; }
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string? PicturePath { get; set; }
@@ -19,9 +19,6 @@ public class Opportunity
     public DateTime UpdatedAt { get; set; }
 
     public Guid CategoryId { get; set; }
-    public Guid? UserOrganizerId { get; set; } 
-    public Guid? OrganizationOrganizerId { get; set; }
-    public Category Category { get; set; } = null!;
-    public User? UserOrganizer { get; set; }
-    public Organization? OrganizationOrganizer { get; set; }
+
+    public OrganizerType OrganizerType { get; set; }
 }

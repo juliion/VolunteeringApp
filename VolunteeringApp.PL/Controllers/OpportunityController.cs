@@ -1,0 +1,72 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using VolunteeringApp.BLL.DTOs.Opportunity;
+using VolunteeringApp.BLL.Interfaces;
+using VolunteeringApp.DLL.Entities;
+using VolunteeringApp.PL.ViewModels.Enums;
+using VolunteeringApp.PL.ViewModels.Opportunity;
+
+namespace VolunteeringApp.PL.Controllers;
+
+public class OpportunityController : Controller
+{
+    private readonly IMapper _mapper;
+    private readonly IOpportunityService _opportunityService;
+    private readonly ICategoryService _categoryService;
+    private readonly UserManager<User> _userManager;
+
+    public OpportunityController(IMapper mapper, IOpportunityService opportunityService, ICategoryService categoryService, UserManager<User> userManager)
+    {
+        _mapper = mapper;
+        _opportunityService = opportunityService;
+        _categoryService = categoryService;
+        _userManager = userManager;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CreateOpportunity(Guid? userId, Guid? organizationId)
+    {
+        var user = await _userManager.Users
+            .Include(u => u.Organizations)
+            .FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+        
+        var userOrganization = user?.Organizations.FirstOrDefault();
+        
+        var categories = await _categoryService.GetAll();
+
+        ViewBag.Categories = categories;
+        ViewBag.User = user;
+        ViewBag.UserOrganization = userOrganization;
+
+        return View("CreateOpportunity");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateOpportunity(CreateOpportunityViewModel opportunityViewModel)
+    {
+        if (opportunityViewModel == null)
+        {
+            return View("CreateOpportunity", opportunityViewModel);
+        }
+        var user = await _userManager.Users
+            .Include(u => u.Organizations)
+            .FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+        var userOrganization = user?.Organizations.FirstOrDefault();
+
+        var opportunityDto = _mapper.Map<CreateOpportunityViewModel, CreateOpportunityDTO>(opportunityViewModel);
+
+        if(opportunityViewModel.OrganizerType == OrganizerType.User)
+        {
+            opportunityDto.UserOrganizerId = user?.Id;
+        }
+        else if (opportunityViewModel.OrganizerType == OrganizerType.Organization)
+        {
+            opportunityDto.OrganizationOrganizerId = userOrganization?.Id;
+        }
+
+        await _opportunityService.Add(opportunityDto);
+        return RedirectToAction("Index", "Home");
+    }
+}

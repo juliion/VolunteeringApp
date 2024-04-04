@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using VolunteeringApp.BLL.DTOs.Category;
+using VolunteeringApp.BLL.DTOs.Opportunity;
 using VolunteeringApp.BLL.DTOs.Organization;
 using VolunteeringApp.BLL.DTOs.User;
 using VolunteeringApp.DLL.Entities;
@@ -17,5 +18,8 @@ public class BLLProfile : Profile
 
         CreateMap<CreateCategoryDTO, Category>();
         CreateMap<Category, CategoryDTO>();
+
+        CreateMap<CreateOpportunityDTO, Opportunity>();
+        CreateMap<Opportunity, OpportunityDTO>();
     }
 }

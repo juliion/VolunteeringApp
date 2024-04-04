@@ -1,8 +1,11 @@
-﻿using VolunteeringApp.DLL.Enums;
+﻿using VolunteeringApp.BLL.DTOs.Category;
+using VolunteeringApp.BLL.DTOs.Organization;
+using VolunteeringApp.BLL.DTOs.User;
+using VolunteeringApp.DLL.Enums;
 
-namespace VolunteeringApp.DLL.Entities;
+namespace VolunteeringApp.BLL.DTOs.Opportunity;
 
-public class Opportunity
+public class OpportunityDTO
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
@@ -17,11 +20,7 @@ public class Opportunity
     public string? ContactsForApplications { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-
-    public Guid CategoryId { get; set; }
-    public Guid? UserOrganizerId { get; set; } 
-    public Guid? OrganizationOrganizerId { get; set; }
-    public Category Category { get; set; } = null!;
-    public User? UserOrganizer { get; set; }
-    public Organization? OrganizationOrganizer { get; set; }
+    public CategoryDTO Category { get; set; } = null!;
+    public UserDTO? UserOrganizer { get; set; }
+    public OrganizationDTO? OrganizationOrganizer { get; set; }
 }

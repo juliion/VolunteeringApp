@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using VolunteeringApp.BLL.DTOs.Category;
+using VolunteeringApp.BLL.DTOs.Opportunity;
 using VolunteeringApp.BLL.DTOs.Organization;
 using VolunteeringApp.BLL.DTOs.User;
 using VolunteeringApp.DLL.Entities;
 using VolunteeringApp.PL.ViewModels.Category;
+using VolunteeringApp.PL.ViewModels.Opportunity;
 using VolunteeringApp.PL.ViewModels.Organization;
 using VolunteeringApp.PL.ViewModels.User;
 
@@ -25,5 +27,9 @@ public class PLProfile : Profile
         CreateMap<UpdateCategoryViewModel, UpdateCategoryDTO>();
         CreateMap<CategoryDTO,CategoryViewModel>();
         CreateMap<FilteredCategoriesDTO, FilteredCategoriesViewModel>();
+
+        CreateMap<CreateOpportunityViewModel, CreateOpportunityDTO>();
+        CreateMap<OpportunityDTO, OpportunityViewModel>();
+        CreateMap<FilteredOpportunitiesDTO, FilteredOpportunitiesViewModel>();
     }
 }

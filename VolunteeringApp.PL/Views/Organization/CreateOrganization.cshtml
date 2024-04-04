@@ -1,6 +1,10 @@
 ﻿@model VolunteeringApp.PL.ViewModels.Organization.CreateOrganizationViewModel
 @{
     ViewData["Title"] = "Create Organization";
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "_LayoutMain";
+    }
 }
 <div class="container">
     <div class="create-org-form-container">
