@@ -1,0 +1,123 @@
+﻿@using VolunteeringApp.DLL.Enums
+@model VolunteeringApp.PL.ViewModels.Opportunity.OpportunityViewModel
+@{
+    ViewData["Title"] = @Model.Name + " Details";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="opp-name-header">
+    <h1>@Model.Name Details</h1>
+</div>
+
+<div class="opportunity-details">
+    <table class="opp-info-table">
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@Model.Description</td>
+        </tr>
+        <tr>
+            <th>StartTime</th>
+            <td>@Model.StartTime</td>
+        </tr>
+        <tr>
+            <th>EndTime</th>
+            <td>@Model.EndTime</td>
+        </tr>
+        <tr>
+            <th>ApplicationDeadline</th>
+            <td>@Model.ApplicationDeadline</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>@Model.Location</td>
+        </tr>
+        @if (@Model.FormForApplicationsPath != null)
+        {
+            <tr>
+                <th>FormForApplicationsPath</th>
+                <td>@Model.FormForApplicationsPath</td>
+            </tr>
+        }
+        @if (@Model.ContactsForApplications != null)
+        {
+            <tr>
+                <th>ContactsForApplications</th>
+                <td>@Model.ContactsForApplications</td>
+            </tr>
+        }
+        <tr>
+            <th>Category</th>
+            <td>@Model.Category</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>@Model.Status</td>
+        </tr>
+        <tr>
+            <th>Picture</th>
+            <td><img src="@Model.PicturePath" alt="@Model.Name"></td>
+        </tr>
+    </table>
+    <table class="organizer-info-table">
+        @if (@Model.UserOrganizer != null)
+        {
+            <tr>
+                <th>Організатор</th>
+                <td>@Model.UserOrganizer.Email</td>
+            </tr>
+            <tr>
+                <th>Ім'я</th>
+                <td>@Model.UserOrganizer.Name</td>
+            </tr>
+            <tr>
+                <th>Прізвище</th>
+                <td>@Model.UserOrganizer.Surname</td>
+            </tr>
+            <tr>
+                <th>Номер телефону</th>
+                <td>@Model.UserOrganizer.PhoneNumber</td>
+            </tr>
+        }
+        @if (@Model.OrganizationOrganizer != null)
+        {
+            <tr>
+                <th>Організатор</th>
+                <td>Організація <a href="@Url.Action("OrganizationDetails", "Admin", new { id = @Model.OrganizationOrganizer.Id })">@Model.OrganizationOrganizer.Name</a></td>
+            </tr>
+            <tr>
+                <th colspan="2">Інформація про власника:</th>
+            </tr>
+            <tr>
+                <th>Ім'я</th>
+                <td>@Model.OrganizationOrganizer.User.Name</td>
+            </tr>
+            <tr>
+                <th>Прізвище</th>
+                <td>@Model.OrganizationOrganizer.User.Surname</td>
+            </tr>
+            <tr>
+                <th>Номер телефону</th>
+                <td>@Model.OrganizationOrganizer.User.PhoneNumber</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.OrganizationOrganizer.User.Email</td>
+            </tr>
+        }
+    </table>
+
+</div>
+<div class="action-buttons actions-details">
+    <button class="aproveBtn" data-id="@Model.Id" @(Model.Status == OpportunityStatus.Accepted ? "disabled" : "")>Схвалити</button>
+    <button class="rejectedBtn" data-id="@Model.Id" @(Model.Status == OpportunityStatus.Rejected ? "disabled" : "")>Відхилити</button>
+    <a href="@Url.Action("OpportunitiesManagement", "Admin")">Back to List</a>
+</div>
+
+@section scripts {
+    <script src="~/js/opportunityActions.js"></script>
+}
+

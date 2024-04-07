@@ -41,6 +41,7 @@ public class OpportunityService : IOpportunityService
                 .Include(org => org.Category)
                 .Include(org => org.UserOrganizer)
                 .Include(org => org.OrganizationOrganizer)
+                    .ThenInclude(org => org != null ? org.User : null)
                 .ToListAsync();
         var opportunity = opportunities.FirstOrDefault(o => o.Id == id);
         if (opportunity == null)
