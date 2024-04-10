@@ -51,7 +51,7 @@
         }
         <tr>
             <th>Category</th>
-            <td>@Model.Category</td>
+            <td>@Model.Category.Name</td>
         </tr>
         <tr>
             <th>Status</th>
@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <th>Picture</th>
-            <td><img src="@Model.PicturePath" alt="@Model.Name"></td>
+            <td><img src="@Url.Content("~/" + Model.PicturePath)" alt="@Model.Name"></td>
         </tr>
     </table>
     <table class="organizer-info-table">

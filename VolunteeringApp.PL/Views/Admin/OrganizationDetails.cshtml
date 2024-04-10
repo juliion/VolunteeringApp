@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <th>Picture</th>
-            <td><img src="@Model.PicturePath" alt="@Model.Name"></td>
+            <td><img src="@Url.Content("~/" + Model.PicturePath)" alt="@Model.Name"></td>
         </tr>
     </table>
     <table class="user-info-table">
@@ -62,7 +62,6 @@
             <td>@Model.User.PhoneNumber</td>
         </tr>
     </table>
-    
 </div>
 <div class="action-buttons actions-details">
     <button class="aproveBtn" data-id="@Model.Id" @(Model.Status == OrganizationStatus.Accepted ? "disabled" : "")>Схвалити</button>

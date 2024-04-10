@@ -8,6 +8,7 @@ public class CreateOrganizationViewModel
     public string Description { get; set; } = null!;
     public string City { get; set; } = null!;
     public string Address { get; set; } = null!;
+    public IFormFile? PictureFile { get; set; }
     public string? PicturePath { get; set; }
     public Guid UserId { get; set; }
 }

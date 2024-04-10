@@ -7,6 +7,7 @@ public class CreateOpportunityViewModel
 {
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
+    public IFormFile? PictureFile { get; set; }
     public string? PicturePath { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }

@@ -16,13 +16,17 @@ public class OpportunityController : Controller
     private readonly IOpportunityService _opportunityService;
     private readonly ICategoryService _categoryService;
     private readonly UserManager<User> _userManager;
+    private readonly IWebHostEnvironment _env;
+    private readonly IFileService _fileService;
 
-    public OpportunityController(IMapper mapper, IOpportunityService opportunityService, ICategoryService categoryService, UserManager<User> userManager)
+    public OpportunityController(IMapper mapper, IOpportunityService opportunityService, ICategoryService categoryService, UserManager<User> userManager, IWebHostEnvironment env, IFileService fileService)
     {
         _mapper = mapper;
         _opportunityService = opportunityService;
         _categoryService = categoryService;
         _userManager = userManager;
+        _env = env;
+        _fileService = fileService;
     }
 
     [HttpGet]
@@ -65,7 +69,11 @@ public class OpportunityController : Controller
         {
             opportunityDto.OrganizationOrganizerId = userOrganization?.Id;
         }
-
+        if (opportunityViewModel.PictureFile != null && opportunityViewModel.PictureFile.Length > 0)
+        {
+            var fileName = await _fileService.SaveFile(_env.WebRootPath, opportunityViewModel.PictureFile);
+            opportunityDto.PicturePath = fileName;
+        }
         await _opportunityService.Add(opportunityDto);
         return RedirectToAction("Index", "Home");
     }

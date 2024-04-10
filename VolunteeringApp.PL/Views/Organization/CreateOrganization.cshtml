@@ -9,7 +9,7 @@
 <div class="container">
     <div class="create-org-form-container">
         <h1>Створити організацію</h1>
-        <form method="post" asp-controller="Organization" asp-action="CreateOrganization">
+        <form method="post" asp-controller="Organization" asp-action="CreateOrganization" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="Name">Назва:</label>
@@ -42,9 +42,9 @@
                 <span asp-validation-for="Address"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PicturePath">Фото:</label>
-                <input class="load-org-pic" asp-for="PicturePath" type="file" required>
-                <span asp-validation-for="PicturePath"></span>
+                <label asp-for="PictureFile">Фото:</label>
+                <input class="load-org-pic" asp-for="PictureFile" type="file">
+                <span asp-validation-for="PictureFile"></span>
             </div>
             <input type="hidden" asp-for="UserId" value="@Model.UserId" />
             <button class="submit-btn" type="submit">Відправити на перевірку</button>

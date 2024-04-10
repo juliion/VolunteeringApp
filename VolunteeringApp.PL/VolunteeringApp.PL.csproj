@@ -23,4 +23,8 @@
     <ProjectReference Include="..\VolunteeringApp.DLL\VolunteeringApp.DLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>
