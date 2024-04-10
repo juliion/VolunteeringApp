@@ -69,6 +69,18 @@ public class OpportunityController : Controller
         {
             opportunityDto.OrganizationOrganizerId = userOrganization?.Id;
         }
+        if (opportunityViewModel.LocationType == LocationType.Remotely)
+        {
+            opportunityDto.Location = LocationType.Remotely;
+        }
+        if (opportunityViewModel.LocationType == LocationType.AllUkraine)
+        {
+            opportunityDto.Location = LocationType.AllUkraine;
+        }
+        if (opportunityViewModel.LocationType == LocationType.AddedLocation && !string.IsNullOrEmpty(opportunityViewModel.AddedLocation))
+        {
+            opportunityDto.Location = opportunityViewModel.AddedLocation;
+        }
         if (opportunityViewModel.PictureFile != null && opportunityViewModel.PictureFile.Length > 0)
         {
             var fileName = await _fileService.SaveFile(_env.WebRootPath, opportunityViewModel.PictureFile);

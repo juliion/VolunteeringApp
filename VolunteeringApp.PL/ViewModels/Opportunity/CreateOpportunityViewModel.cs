@@ -13,7 +13,8 @@ public class CreateOpportunityViewModel
     public DateTime EndTime { get; set; }
     public DateTime ApplicationDeadline { get; set; }
     public OpportunityStatus Status { get; set; }
-    public string Location { get; set; } = null!;
+    public string LocationType { get; set; } = null!;
+    public string? AddedLocation { get; set; }
     public string? FormForApplicationsPath { get; set; }
     public string? ContactsForApplications { get; set; }
     public DateTime CreatedAt { get; set; }

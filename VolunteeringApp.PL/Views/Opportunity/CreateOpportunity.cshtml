@@ -70,20 +70,20 @@
             <div class="form-group">
                 <label>Локація:</label>
                 <div class="form-check">
-                    <input type="checkbox" id="remotelyCheckbox" asp-for="Location" name="Location" value="Remotely">
+                    <input type="checkbox" id="remotelyCheckbox" asp-for="LocationType" name="LocationType" value="@LocationType.Remotely">
                     <label for="remotelyCheckbox">Дистанційно</label>
                 </div>
                 <div class="form-check">
-                    <input type="checkbox" id="allUkraineCheckbox" asp-for="Location" name="Location" value="AllUkraine">
+                    <input type="checkbox" id="allUkraineCheckbox" asp-for="LocationType" name="LocationType" value="@LocationType.AllUkraine">
                     <label for="allUkraineCheckbox">Вся Україна</label>
                 </div>
                 <div class="form-check">
-                    <input type="checkbox" id="addLocationCheckbox" asp-for="Location" name="Location" value="AddLocation">
+                    <input type="checkbox" id="addLocationCheckbox" asp-for="LocationType" name="LocationType" value="@LocationType.AddedLocation">
                     <label for="addLocationCheckbox">Додати локацію</label>
                 </div>
                 <div id="newLocationField" style="display: none;">
-                    <label asp-for="Location">Додайте локацію:</label>
-                    <input type="text" asp-for="Location">
+                    <label asp-for="AddedLocation">Додайте локацію:</label>
+                    <input type="text" asp-for="AddedLocation">
                 </div>
             </div>
             <div class="form-group">
@@ -99,42 +99,18 @@
 @section scripts {
     <script>
         $(document).ready(() => {
-            const locationCheckboxes = $('input[type="checkbox"][name="Location"]');
-            const addLocationCheckbox = $('#addLocationCheckbox');
+            const locationCheckboxes = $('input[type="checkbox"][name="LocationType"]');
             const newLocationField = $('#newLocationField');
-
-            // Function to update the value of the Location field
-            const updateLocationFieldValue = () => {
-                if (addLocationCheckbox.prop('checked')) {
-                    $('input[name="Location"]').val(newLocationField.find('input').val());
-                } else {
-                    $('input[name="Location"]').val('');
-                }
-            };
-
-            newLocationField.toggle(addLocationCheckbox.prop('checked'));
-            updateLocationFieldValue();
 
             locationCheckboxes.change(function () {
                 locationCheckboxes.not(this).prop('checked', false);
 
-                if ($(this).val() !== 'AddLocation') {
+                if ($(this).val() !== '@LocationType.AddedLocation') {
                     newLocationField.hide();
-                    updateLocationFieldValue();
                 }
-                if ($(this).val() === 'AddLocation') {
-                    newLocationField.toggle(this.checked);
-                    updateLocationFieldValue();
+                if ($(this).val() === '@LocationType.AddedLocation') {
+                    newLocationField.show();
                 }
-            });
-
-            addLocationCheckbox.change(() => {
-                newLocationField.toggle(addLocationCheckbox.prop('checked'));
-                updateLocationFieldValue();
-            });
-
-            newLocationField.find('input').on('input', () => {
-                updateLocationFieldValue();
             });
         });
     </script>
