@@ -486,15 +486,6 @@ tr:hover {
     margin-bottom: 20px;
 }
 
-.row {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.col-md-4 {
-    margin-bottom: 15px;
-}
-
 label {
     font-weight: bold;
     display: block;
@@ -502,13 +493,14 @@ label {
 
 .filter-select,
 input[type="text"],
-.btn-apply-filters {
+.btn-apply-filters,
+.filter-category select{
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    margin-top: 8px; /* Add some spacing between elements */
+    margin-top: 8px;
 }
 
 .btn-apply-filters {
@@ -615,4 +607,108 @@ input[type="text"],
 
 .dropdown-item:hover {
     background-color: #f0f0f0 !important;
+}
+
+.container-opportunities {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.opportunities {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.opportunities li {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.opportunities li .picture img{
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.opportunities li h3 {
+    margin-top: 0;
+}
+
+.opportunities li p {
+    margin-top: 10px;
+}
+
+.details-opp {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 30px;
+}
+
+.details-opp span {
+    font-size: 14px;
+}
+
+.container-opportunities .filters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    row-gap: 16px;
+}
+
+.container-opportunities .filter-select {
+    min-width: 250px;
+    font-size: 16px;
+    margin-top: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 12px;
+}
+.filter-category select {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 12px;
+}
+
+.filter-category {
+    margin-top: 20px;
+}
+
+.container-opportunities .filter-search {
+    min-width: 400px;
+}
+
+.sidebar-filters {
+    width: 350px;
+    height: 100%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 200px;
+}
+
+.opportunities-with-sidebar {
+    display: flex;
+    justify-content: space-around;
+}
+
+.container-opportunities h2 {
+    font-size: 36px;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.filter-location .location-lable {
+    margin-bottom: 8px;
 }

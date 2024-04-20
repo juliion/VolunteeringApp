@@ -10,4 +10,6 @@ public class OpportunitiesQueryFilters
     public string? Search { get; set; }
     public string Order { get; set; } = "desc";
     public OpportunityStatus? Status { get; set; }
+    public string? Category { get; set; }
+    public string? Location { get; set; }
 }

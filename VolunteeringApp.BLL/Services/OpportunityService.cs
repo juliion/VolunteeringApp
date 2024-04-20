@@ -83,6 +83,16 @@ public class OpportunityService : IOpportunityService
             query = query.Where(t => t.Name.Contains(filters.Search));
         }
 
+        if (!string.IsNullOrEmpty(filters.Category))
+        {
+            query = query.Where(t => t.Category.Name == filters.Category);
+        }
+
+        if (!string.IsNullOrEmpty(filters.Location))
+        {
+            query = query.Where(t => t.Location == filters.Location);
+        }
+
         var total = await query.CountAsync();
         var take = filters.Take;
         var skip = filters.Skip;

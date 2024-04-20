@@ -89,4 +89,17 @@ public class OpportunityController : Controller
         await _opportunityService.Add(opportunityDto);
         return RedirectToAction("Index", "Home");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Opportunities([FromQuery] OpportunitiesQueryFilters filters)
+    {
+        var filteredOppDTOs = await _opportunityService.GetFiltered(filters);
+
+        var filteredOpp = _mapper.Map<FilteredOpportunitiesDTO, FilteredOpportunitiesViewModel>(filteredOppDTOs);
+
+        var categories = await _categoryService.GetAll();
+        ViewBag.Categories = categories;
+
+        return View(filteredOpp);
+    }
 }
