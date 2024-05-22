@@ -27,7 +27,7 @@
             <ul class="opportunities">
                 @foreach (var opportunity in Model.Opportunities)
                 {
-                    <li>
+                    <li id="opportunity-item" data-opportunity-id="@opportunity.Id">
                         <div class="picture">   
                             <img src="@Url.Content("~/" + opportunity.PicturePath)" alt="Opportunity Image">
                         </div>
@@ -186,6 +186,12 @@
                     applyFilters();
                     event.preventDefault(); 
                 }
+            });
+
+            $('.opportunities').on('click', '#opportunity-item', function () {
+                var opportunityId = $(this).data('opportunity-id');
+                var url = 'Opportunity/' + opportunityId;
+                window.location.href = url;
             });
         });
     </script>

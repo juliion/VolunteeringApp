@@ -58,6 +58,7 @@ body {
     text-align: center;
 }
 
+
 .register-form-container form,
 .login-form-container form,
 .create-org-form-container form,
@@ -711,4 +712,81 @@ input[type="text"],
 
 .filter-location .location-lable {
     margin-bottom: 8px;
+}
+
+.container-opportunity {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.opportunity-data-section {
+    flex: 1;
+}
+
+.opportunity-data-section h2 {
+    color: #333;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.organizer-section h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #666;
+    margin-top: 50px;
+}
+
+.opportunity-data-section p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.container-opportunity .category {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgba(54, 179, 126, 0.2);
+    color: #36B37E;
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-opportunity .picture img {
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container-opportunity .picture {
+    flex: 1;
+}
+
+.organizer-section p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.organizer-section strong {
+    font-weight: bold;
+}
+
+.organizer-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.organizer-section a:hover {
+    text-decoration: underline;
 }

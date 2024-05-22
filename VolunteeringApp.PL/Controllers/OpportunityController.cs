@@ -102,4 +102,13 @@ public class OpportunityController : Controller
 
         return View(filteredOpp);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Opportunity(Guid id)
+    {
+        var oppDTO = await _opportunityService.Get(id);
+
+        var opp = _mapper.Map<OpportunityDTO, OpportunityViewModel>(oppDTO);
+        return View(opp);
+    }
 }
