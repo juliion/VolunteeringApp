@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VolunteeringApp.BLL\VolunteeringApp.BLL.csproj" />
-    <ProjectReference Include="..\VolunteeringApp.DLL\VolunteeringApp.DLL.csproj" />
+    <ProjectReference Include="..\VolunteeringApp.DLL\VolunteeringApp.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
