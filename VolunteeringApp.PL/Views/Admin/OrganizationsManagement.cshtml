@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:10px;">
             <div class="col-md-3">
                 <label for="sortFilter">Сортувати за:</label>
                 <select class="filter-select" id="sortFilter" name="sortFilter">
@@ -27,13 +27,14 @@
             <div class="col-md-3">
                 <label for="statusFilter">Статус:</label>
                 <select class="filter-select" id="statusFilter" name="statusFilter">
-                    <option value="">All</option>
-                    <option value="Accepted">Accepted</option>
-                    <option value="Rejected">Rejected</option>
+                    <option value="">Всі</option>
+                    <option value="Pending">На розгляді</option>
+                    <option value="Accepted">Прийнято</option>
+                    <option value="Rejected">Відхилено</option>
                 </select>
             </div>
             <div class="col-md-1">
-                <button class="btn-apply-filters" type="button" id="applyFiltersBtn">Apply Filters</button>
+                <button class="btn-apply-filters" type="button" id="applyFiltersBtn">Застосувати фільтри</button>
             </div>
         </div>
     </div>
@@ -56,7 +57,7 @@
                     <td class="action-buttons">
                         <button class="aproveBtn" data-id="@organization.Id" @(organization.Status == OrganizationStatus.Accepted ? "disabled" : "")>Схвалити</button>
                         <button class="rejectedBtn" data-id="@organization.Id" @(organization.Status == OrganizationStatus.Rejected ? "disabled" : "")>Відхилити</button>
-                        <a href="@Url.Action("OrganizationDetails", "Admin", new { id = organization.Id })">Details</a>
+                        <a href="@Url.Action("OrganizationDetails", "Admin", new { id = organization.Id })">Детальніше</a>
                     </td>
                 </tr>
             }
@@ -104,7 +105,6 @@
                 newUrl = updateQueryStringParameter(newUrl, 'Status', status);
                 newUrl = updateQueryStringParameter(newUrl, 'Search', search);
 
-                // Redirect to the new URL
                 window.location.href = newUrl;
             }
             
@@ -125,11 +125,6 @@
             $('#search-btn').click(() => {
                 applyFilters();
             });
-            // $('#searchFilter').keypress((e) => {
-            //     if (e.which === 3) { // Enter key
-            //         applyFilters();
-            //     }
-            // });
         });
     </script>
     <script src="~/js/organizationActions.js"></script>

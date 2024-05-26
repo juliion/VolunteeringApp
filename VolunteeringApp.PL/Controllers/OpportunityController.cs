@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ public class OpportunityController : Controller
         _fileService = fileService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> CreateOpportunity(Guid? userId, Guid? organizationId)
     {
@@ -47,6 +49,7 @@ public class OpportunityController : Controller
         return View("CreateOpportunity");
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateOpportunity(CreateOpportunityViewModel opportunityViewModel)
     {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VolunteeringApp.BLL.DTOs.Category;
 using VolunteeringApp.BLL.DTOs.Opportunity;
@@ -10,6 +11,7 @@ using VolunteeringApp.PL.ViewModels.Organization;
 
 namespace VolunteeringApp.PL.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class AdminController : Controller
 {
     private readonly IMapper _mapper;

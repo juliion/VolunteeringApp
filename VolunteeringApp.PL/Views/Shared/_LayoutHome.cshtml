@@ -19,9 +19,6 @@
         @if (User.Identity.IsAuthenticated)
         {
             <ul>
-                <li>
-                    <a asp-controller="Opportunity" asp-action="Opportunities">Шукати можливості</a>
-                </li>
                 <li class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @User.Identity.Name
@@ -49,7 +46,7 @@
                 </li>
             </ul>
         }
-        
+
     </div>
     <div>
         @RenderBody()

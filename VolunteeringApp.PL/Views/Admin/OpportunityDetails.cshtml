@@ -6,17 +6,17 @@
 }
 
 <div class="opp-name-header">
-    <h1>@Model.Name Details</h1>
+    <h1>Детально про @Model.Name</h1>
 </div>
 
 <div class="opportunity-details">
     <table class="opp-info-table">
         <tr>
-            <th>Name</th>
+            <th>Назва</th>
             <td>@Model.Name</td>
         </tr>
         <tr>
-            <th>Description</th>
+            <th>Опис</th>
             <td>@Model.Description</td>
         </tr>
         <tr>
@@ -24,41 +24,41 @@
             <td>@Model.StartTime</td>
         </tr>
         <tr>
-            <th>EndTime</th>
+            <th>Дата закінчення</th>
             <td>@Model.EndTime</td>
         </tr>
         <tr>
-            <th>ApplicationDeadline</th>
+            <th>Кінцева дата подачі заявки</th>
             <td>@Model.ApplicationDeadline</td>
         </tr>
         <tr>
-            <th>Location</th>
+            <th>Розташування</th>
             <td>@Model.Location</td>
         </tr>
         @if (@Model.FormForApplicationsPath != null)
         {
             <tr>
-                <th>FormForApplicationsPath</th>
+                <th>Посилання на форму для подачі заявки</th>
                 <td>@Model.FormForApplicationsPath</td>
             </tr>
         }
         @if (@Model.ContactsForApplications != null)
         {
             <tr>
-                <th>ContactsForApplications</th>
+                <th>Контакти для подачі заявки</th>
                 <td>@Model.ContactsForApplications</td>
             </tr>
         }
         <tr>
-            <th>Category</th>
+            <th>Категорія</th>
             <td>@Model.Category.Name</td>
         </tr>
         <tr>
-            <th>Status</th>
+            <th>Статус</th>
             <td>@Model.Status</td>
         </tr>
         <tr>
-            <th>Picture</th>
+            <th>Зображення</th>
             <td><img src="@Url.Content("~/" + Model.PicturePath)" alt="@Model.Name"></td>
         </tr>
     </table>
@@ -114,7 +114,7 @@
 <div class="action-buttons actions-details">
     <button class="aproveBtn" data-id="@Model.Id" @(Model.Status == OpportunityStatus.Accepted ? "disabled" : "")>Схвалити</button>
     <button class="rejectedBtn" data-id="@Model.Id" @(Model.Status == OpportunityStatus.Rejected ? "disabled" : "")>Відхилити</button>
-    <a href="@Url.Action("OpportunitiesManagement", "Admin")">Back to List</a>
+    <a href="@Url.Action("OpportunitiesManagement", "Admin")">Повернутися до списку</a>
 </div>
 
 @section scripts {

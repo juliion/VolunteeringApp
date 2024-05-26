@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 </head>
@@ -12,19 +13,40 @@
     <div class="menu admin-menu">
         <div class="logo">
             <img src="~/img/logo.jpg" alt="Logo">
-            <h1>VolunteeringApp</h1>
+            <h1>
+                <a asp-controller="Home" asp-action="Index">VolunteeringApp</a>
+            </h1>
         </div>
-        <ul>
-            <li>
-                <a asp-controller="Admin" asp-action="OrganizationsManagement">Керувати організаціями</a>
-            </li>
-            <li>
-                <a asp-controller="Admin" asp-action="OpportunitiesManagement">Керувати пропозиціями</a>
-            </li>
-            <li>
-                <a asp-controller="Admin" asp-action="CategoriesManagement">Керувати категоріями</a>
-            </li>
-        </ul>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <ul>
+                <li>
+                    <a asp-controller="Admin" asp-action="OrganizationsManagement">Керувати організаціями</a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="OpportunitiesManagement">Керувати пропозиціями</a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="CategoriesManagement">Керувати категоріями</a>
+                </li>
+                <li>
+                    <form class="logout" method="post" asp-controller="Account" asp-action="Logout">
+                        <input type="submit" value="Вихід" />
+                    </form>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul>
+                <li>
+                    <a asp-controller="Account" asp-action="Register">Зареєструватись</a>
+                </li>
+                <li>
+                    <a asp-controller="Account" asp-action="Login">Увійти</a>
+                </li>
+            </ul>
+        }
     </div>
     <div>
         @RenderBody()

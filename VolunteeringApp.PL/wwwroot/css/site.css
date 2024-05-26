@@ -263,6 +263,13 @@ input[type="datetime-local"],
     font-weight: 600;
     color: #424249;
 }
+.menu .logo a {
+    text-decoration: none;
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #424249;
+}
 
 .menu ul {
     list-style: none;

@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:10px;">
             <div class="col-md-3">
                 <label for="sortFilter">Сортувати за:</label>
                 <select class="filter-select" id="sortFilter" name="sortFilter">
@@ -27,13 +27,14 @@
             <div class="col-md-3">
                 <label for="statusFilter">Статус:</label>
                 <select class="filter-select" id="statusFilter" name="statusFilter">
-                    <option value="">All</option>
-                    <option value="Accepted">Accepted</option>
-                    <option value="Rejected">Rejected</option>
+                    <option value="">Всі</option>
+                    <option value="Pending">На розгляді</option>
+                    <option value="Accepted">Прийнято</option>
+                    <option value="Rejected">Відхилено</option>
                 </select>
             </div>
             <div class="col-md-1">
-                <button class="btn-apply-filters" type="button" id="applyFiltersBtn">Apply Filters</button>
+                <button class="btn-apply-filters" type="button" id="applyFiltersBtn">Застосувати фільтри</button>
             </div>
         </div>
     </div>
@@ -56,7 +57,7 @@
                     <td class="action-buttons">
                         <button class="aproveBtn" data-id="@opportunity.Id" @(opportunity.Status == OpportunityStatus.Accepted ? "disabled" : "")>Схвалити</button>
                         <button class="rejectedBtn" data-id="@opportunity.Id" @(opportunity.Status == OpportunityStatus.Rejected ? "disabled" : "")>Відхилити</button>
-                        <a href="@Url.Action("OpportunityDetails", "Admin", new { id = opportunity.Id })">Details</a>
+                        <a href="@Url.Action("OpportunityDetails", "Admin", new { id = opportunity.Id })">Детальніше</a>
                     </td>
                 </tr>
             }
@@ -104,7 +105,6 @@
                 newUrl = updateQueryStringParameter(newUrl, 'Status', status);
                 newUrl = updateQueryStringParameter(newUrl, 'Search', search);
 
-                // Redirect to the new URL
                 window.location.href = newUrl;
             }
 

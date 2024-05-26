@@ -1,6 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    Layout = "_LayoutMain";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        Layout = "_LayoutAdmin";
+    }
+    else
+    {
+        Layout = "_LayoutHome";
+    }
 }
 
 <div class="container-home">
@@ -9,8 +16,15 @@
             <h1>Вітаємо на VolunteeringApp</h1>
             <p>Онлайн-платформа, яка об'єднує волонтерів та організації.Об'єднаймо сили, Змінемо життя на краще!</p>
             <div class="register-btns">
-                <a style="color: #ffffff;">Шукати пропозиції 🫶</a>
-                <a asp-controller="Account" asp-action="Register" style="color: #ffffff;">Знайти волонтера 🔎</a>
+                <a style="color: #ffffff;" asp-controller="Opportunity" asp-action="Opportunities">Шукати можливості 🫶</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Opportunity" asp-action="CreateOpportunity" style="color: #ffffff;">Знайти волонтера 🔎</a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Register" style="color: #ffffff;">Знайти волонтера 🔎</a>
+                }
             </div>
         </div>
         <div class="hero-image">
