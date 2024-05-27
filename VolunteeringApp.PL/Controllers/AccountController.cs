@@ -29,29 +29,32 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(RegistrationViewModel regViewModel)
     {
-       // var validationRes = _registrationValidator.Validate(regViewModel);
-        //if (!validationRes.IsValid)
-        //    return BadRequest(validationRes);
-
-        var user = _mapper.Map<RegistrationViewModel, User>(regViewModel);
-        var result = await _userManager.CreateAsync(user, regViewModel.Password);
-        if (result.Succeeded)
+        if (ModelState.IsValid)
         {
-
-            if (regViewModel.IsOrganizationRep)
+            var user = _mapper.Map<RegistrationViewModel, User>(regViewModel);
+            var result = await _userManager.CreateAsync(user, regViewModel.Password);
+            if (result.Succeeded)
             {
-                //await _userManager.AddToRoleAsync(user, "OrganizationRepresentative");
-                //regViewModel.CreateOrganizationDTO.UserId = user.Id;
-                //var orgDto = _mapper.Map<CreateOrganizationViewModel, CreateOrganizationDTO>(regViewModel.CreateOrganizationDTO);
-                //await _organizationService.Add(orgDto);
-                return RedirectToAction("CreateOrganization", "Organization", new { userId = user.Id });
+
+                if (regViewModel.IsOrganizationRep)
+                {
+                    await _userManager.AddToRoleAsync(user, "OrganizationRepresentative");
+                    return RedirectToAction("CreateOrganization", "Organization", new { userId = user.Id });
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                await _userManager.AddToRoleAsync(user, "User");
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Home");
         }
         return View(regViewModel);
     }
@@ -82,7 +85,7 @@ public class AccountController : Controller
             }
             else
             {
-                ModelState.AddModelError("", "Wrong email and/or password");
+                ModelState.AddModelError("", "Неправильний email і/або пароль");
             }
         }
         return View(loginViewModel);

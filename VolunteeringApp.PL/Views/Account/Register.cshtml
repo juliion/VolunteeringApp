@@ -9,32 +9,32 @@
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="Name">Ім'я:</label>
-                <input asp-for="Name" type="text" required>
+                <input asp-for="Name" type="text" placeholder="Введіть ваше ім'я" required>
                 <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Surname">Прізвище:</label>
-                <input asp-for="Surname" type="text" required>
+                <input asp-for="Surname" type="text" placeholder="Введіть ваше прізвище" required>
                 <span asp-validation-for="Surname"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email">Пошта:</label>
-                <input asp-for="Email" type="email" required>
+                <input asp-for="Email" type="email" placeholder="Введіть вашу електронну пошту" required>
                 <span asp-validation-for="Email"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber">Номер телефону:</label>
-                <input asp-for="PhoneNumber" type="text" required>
+                <input asp-for="PhoneNumber" type="text" placeholder="+380" required>
                 <span asp-validation-for="PhoneNumber"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password">Пароль:</label>
-                <input asp-for="Password" type="password" required>
+                <input asp-for="Password" type="password" placeholder="Пароль" required>
                 <span asp-validation-for="Password"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PasswordConfirm">Підтвердження паролю:</label>
-                <input asp-for="PasswordConfirm" type="password" required>
+                <input asp-for="PasswordConfirm" type="password" placeholder="Підтвердження паролю" required>
                 <span asp-validation-for="PasswordConfirm"></span>
             </div>
             <div class="form-group">

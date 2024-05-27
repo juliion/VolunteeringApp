@@ -7,7 +7,6 @@ using System.Text;
 using VolunteeringApp.BLL.Common.Mappings;
 using VolunteeringApp.BLL.Interfaces;
 using VolunteeringApp.BLL.Services;
-using VolunteeringApp.BLL.Validators;
 using VolunteeringApp.DLL;
 using VolunteeringApp.DLL.Entities;
 using VolunteeringApp.PL.Common.Mappings;
@@ -22,8 +21,6 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<VolunteeringAppDbContex
 
 builder.Services.AddAutoMapper(typeof(BLLProfile));
 builder.Services.AddAutoMapper(typeof(PLProfile));
-
-builder.Services.AddValidatorsFromAssemblyContaining<OrganizationValidator>();
 
 builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<VolunteeringAppDbContext>()

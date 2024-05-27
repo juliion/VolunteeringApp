@@ -53,44 +53,44 @@ public class OpportunityController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateOpportunity(CreateOpportunityViewModel opportunityViewModel)
     {
-        if (opportunityViewModel == null)
-        {
-            return View("CreateOpportunity", opportunityViewModel);
-        }
-        var user = await _userManager.Users
-            .Include(u => u.Organizations)
-            .FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
-        var userOrganization = user?.Organizations.FirstOrDefault();
+        if (ModelState.IsValid)
+        {   
+            var user = await _userManager.Users
+                .Include(u => u.Organizations)
+                .FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+            var userOrganization = user?.Organizations.FirstOrDefault();
 
-        var opportunityDto = _mapper.Map<CreateOpportunityViewModel, CreateOpportunityDTO>(opportunityViewModel);
+            var opportunityDto = _mapper.Map<CreateOpportunityViewModel, CreateOpportunityDTO>(opportunityViewModel);
 
-        if(opportunityViewModel.OrganizerType == OrganizerType.User)
-        {
-            opportunityDto.UserOrganizerId = user?.Id;
+            if(opportunityViewModel.OrganizerType == OrganizerType.User)
+            {
+                opportunityDto.UserOrganizerId = user?.Id;
+            }
+            else if (opportunityViewModel.OrganizerType == OrganizerType.Organization)
+            {
+                opportunityDto.OrganizationOrganizerId = userOrganization?.Id;
+            }
+            if (opportunityViewModel.LocationType == LocationType.Remotely)
+            {
+                opportunityDto.Location = LocationType.Remotely;
+            }
+            if (opportunityViewModel.LocationType == LocationType.AllUkraine)
+            {
+                opportunityDto.Location = LocationType.AllUkraine;
+            }
+            if (opportunityViewModel.LocationType == LocationType.AddedLocation && !string.IsNullOrEmpty(opportunityViewModel.AddedLocation))
+            {
+                opportunityDto.Location = opportunityViewModel.AddedLocation;
+            }
+            if (opportunityViewModel.PictureFile != null && opportunityViewModel.PictureFile.Length > 0)
+            {
+                var fileName = await _fileService.SaveFile(_env.WebRootPath, opportunityViewModel.PictureFile);
+                opportunityDto.PicturePath = fileName;
+            }
+            await _opportunityService.Add(opportunityDto);
+            return RedirectToAction("Index", "Home");
         }
-        else if (opportunityViewModel.OrganizerType == OrganizerType.Organization)
-        {
-            opportunityDto.OrganizationOrganizerId = userOrganization?.Id;
-        }
-        if (opportunityViewModel.LocationType == LocationType.Remotely)
-        {
-            opportunityDto.Location = LocationType.Remotely;
-        }
-        if (opportunityViewModel.LocationType == LocationType.AllUkraine)
-        {
-            opportunityDto.Location = LocationType.AllUkraine;
-        }
-        if (opportunityViewModel.LocationType == LocationType.AddedLocation && !string.IsNullOrEmpty(opportunityViewModel.AddedLocation))
-        {
-            opportunityDto.Location = opportunityViewModel.AddedLocation;
-        }
-        if (opportunityViewModel.PictureFile != null && opportunityViewModel.PictureFile.Length > 0)
-        {
-            var fileName = await _fileService.SaveFile(_env.WebRootPath, opportunityViewModel.PictureFile);
-            opportunityDto.PicturePath = fileName;
-        }
-        await _opportunityService.Add(opportunityDto);
-        return RedirectToAction("Index", "Home");
+        return View(opportunityViewModel);
     }
 
     [HttpGet]

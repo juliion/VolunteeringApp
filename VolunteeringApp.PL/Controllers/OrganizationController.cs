@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using VolunteeringApp.BLL.DTOs.Organization;
 using VolunteeringApp.BLL.Interfaces;
+using VolunteeringApp.PL.ViewModels.Opportunity;
 using VolunteeringApp.PL.ViewModels.Organization;
 
 namespace VolunteeringApp.PL.Controllers;
@@ -35,19 +36,19 @@ public class OrganizationController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateOrganization(CreateOrganizationViewModel organizationViewModel)
     {
-        if (organizationViewModel == null) 
+        if (ModelState.IsValid)
         {
-            return View("CreateOrganization", organizationViewModel);
-        }
-        if (organizationViewModel.PictureFile != null && organizationViewModel.PictureFile.Length > 0)
-        {
-            var fileName = await _fileService.SaveFile(_env.WebRootPath, organizationViewModel.PictureFile);
-            organizationViewModel.PicturePath = fileName;
-        }
+            if (organizationViewModel.PictureFile != null && organizationViewModel.PictureFile.Length > 0)
+            {
+                var fileName = await _fileService.SaveFile(_env.WebRootPath, organizationViewModel.PictureFile);
+                organizationViewModel.PicturePath = fileName;
+            }
 
-        var orgDto = _mapper.Map<CreateOrganizationViewModel, CreateOrganizationDTO>(organizationViewModel);
+            var orgDto = _mapper.Map<CreateOrganizationViewModel, CreateOrganizationDTO>(organizationViewModel);
 
-        await _organizationService.Add(orgDto);
-        return RedirectToAction("Index", "Home");
+            await _organizationService.Add(orgDto);
+            return RedirectToAction("Index", "Home");
+        }
+        return View(organizationViewModel);
     }
 }

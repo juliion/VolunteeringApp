@@ -13,32 +13,32 @@
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="Name">Назва:</label>
-                <input asp-for="Name" type="text" required>
+                <input asp-for="Name" type="text" placeholder="Введіть назву вашої організації" required>
                 <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email">Офіційна пошта:</label>
-                <input asp-for="Email" type="email" required>
+                <input asp-for="Email" type="email" placeholder="Введіть електронну пошту" required>
                 <span asp-validation-for="Email"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber">Офіційний номер:</label>
-                <input asp-for="PhoneNumber" type="text" required>
+                <input asp-for="PhoneNumber" type="text" placeholder="+380" required>
                 <span asp-validation-for="PhoneNumber"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description">Опис:</label>
-                <textarea class="desc-org-input" asp-for="Description"></textarea>
+                <textarea class="desc-org-input" asp-for="Description" placeholder="Опишіть вашу організацію"></textarea>
                 <span asp-validation-for="Description"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City">Місто:</label>
-                <input asp-for="City" type="text" required>
+                <input asp-for="City" type="text" placeholder="Введіть місто" required>
                 <span asp-validation-for="City"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address">Адреса:</label>
-                <input asp-for="Address" type="text" required>
+                <input asp-for="Address" type="text" placeholder="Введіть адресу" required>
                 <span asp-validation-for="Address"></span>
             </div>
             <div class="form-group">

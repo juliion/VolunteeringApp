@@ -16,7 +16,18 @@
     <div class="opportunity-data-section">
         <p class="category"><strong>@Model.Category.Name</strong></p>
         <h2>@Model.Name</h2>
-        <p><i class="fa-solid fa-location-dot"></i> @Model.Location</p>
+        @if (@Model.Location == LocationType.Remotely)
+        {
+            <p><i class="fa-solid fa-location-dot"></i> Дистанційно</p>
+        }
+        else if (@Model.Location == LocationType.AllUkraine)
+        {
+            <p><i class="fa-solid fa-location-dot"></i> Вся Україна</p>
+        }
+        else
+        {
+            <p><i class="fa-solid fa-location-dot"></i> @Model.Location</p>
+        }
         <p><i class="fa-regular fa-calendar-days"></i> @Model.StartTime - @Model.EndTime</p>
         <p><strong>Кінцева дата подачі заявки:</strong> @Model.ApplicationDeadline</p>
         <p>@Model.Description</p>
@@ -36,7 +47,7 @@
             }
             @if (!string.IsNullOrEmpty(Model.FormForApplicationsPath))
             {
-                <p><strong>Form for Applications:</strong> <a href="@Model.FormForApplicationsPath">Link</a></p>
+                <p><strong>Форма для подачі заявок:</strong> <a href="@Model.FormForApplicationsPath">Посилання</a></p>
             }
         </div>
     </div>

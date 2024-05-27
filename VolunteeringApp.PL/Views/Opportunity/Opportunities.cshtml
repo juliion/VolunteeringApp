@@ -43,7 +43,18 @@
                             }
                             <div class="details-opp">
                                 <span><i class="fa-regular fa-calendar-days"></i> @opportunity.StartTime - @opportunity.EndTime</span>
-                                <span><i class="fa-solid fa-location-dot"></i> @opportunity.Location</span>
+                                @if (@opportunity.Location == LocationType.Remotely)
+                                {
+                                    <span><i class="fa-solid fa-location-dot"></i> Дистанційно</span>
+                                }
+                                else if (@opportunity.Location == LocationType.AllUkraine)
+                                {
+                                    <span><i class="fa-solid fa-location-dot"></i> Вся Україна</span>
+                                }
+                                else
+                                {
+                                    <span><i class="fa-solid fa-location-dot"></i> @opportunity.Location</span>
+                                }
                             </div>
                         </div>
                     </li>
