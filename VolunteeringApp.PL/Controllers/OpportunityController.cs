@@ -100,6 +100,8 @@ public class OpportunityController : Controller
 
         var filteredOpp = _mapper.Map<FilteredOpportunitiesDTO, FilteredOpportunitiesViewModel>(filteredOppDTOs);
 
+        filteredOpp.Opportunities = filteredOpp.Opportunities.Where(opp => opp.Status == DLL.Enums.OpportunityStatus.Accepted).ToList();
+
         var categories = await _categoryService.GetAll();
         ViewBag.Categories = categories;
 

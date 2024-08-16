@@ -13,7 +13,6 @@ public class OpportunityService : IOpportunityService
 {
     private readonly VolunteeringAppDbContext _context;
     private readonly IMapper _mapper;
-
     public OpportunityService(VolunteeringAppDbContext context, IMapper mapper)
     {
         _context = context;
@@ -34,7 +33,6 @@ public class OpportunityService : IOpportunityService
 
         return newOpportunity.Id;
     }
-
     public async Task<OpportunityDTO> Get(Guid id)
     {
         var opportunities = await _context.Opportunities
@@ -121,7 +119,6 @@ public class OpportunityService : IOpportunityService
 
         return filteredOpportunities;
     }
-
     public async Task Update(Guid id, UpdateOpportunityDTO opportunityDTO)
     {
         var opportunity = await _context.Opportunities.FindAsync(id);
