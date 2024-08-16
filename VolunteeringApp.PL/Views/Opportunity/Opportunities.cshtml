@@ -1,0 +1,209 @@
+﻿@using VolunteeringApp.BLL.DTOs.Opportunity
+@using VolunteeringApp.PL.ViewModels.Enums
+@model VolunteeringApp.PL.ViewModels.Opportunity.FilteredOpportunitiesViewModel
+@{
+    ViewData["Title"] = "Opportunities";
+    Layout = "_LayoutMain";
+}
+
+<div class="container-opportunities">
+    <div class="opportunities-with-sidebar">
+        <div class="content-opportunities col-8">
+            <h2>Можливості</h2>
+            <div class="filters">
+                <div>
+                    <div class="filter-search">
+                        <input type="text" class="form-control" id="searchFilter" placeholder="Пошук пропозиції..." />
+                        <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+                <div>
+                    <select class="filter-select" id="sortFilter" name="sortFilter">
+                        <option value="CreatedAt">Найновіші</option>
+                        <option value="Name">За алфавітом</option>
+                    </select>
+                </div>
+            </div>
+            <ul class="opportunities">
+                @foreach (var opportunity in Model.Opportunities)
+                {
+                    <li id="opportunity-item" data-opportunity-id="@opportunity.Id">
+                        <div class="picture">   
+                            <img src="@Url.Content("~/" + opportunity.PicturePath)" alt="Opportunity Image">
+                        </div>
+                        <div>
+                            <h3>@opportunity.Name</h3>
+                            @if (@opportunity.UserOrganizer != null)
+                            {
+                                <p>@opportunity.UserOrganizer.Name</p>
+                            }
+                            @if (@opportunity.OrganizationOrganizer != null)
+                            {
+                                <p>@opportunity.OrganizationOrganizer.Name</p>
+                            }
+                            <div class="details-opp">
+                                <span><i class="fa-regular fa-calendar-days"></i> @opportunity.StartTime - @opportunity.EndTime</span>
+                                @if (@opportunity.Location == LocationType.Remotely)
+                                {
+                                    <span><i class="fa-solid fa-location-dot"></i> Дистанційно</span>
+                                }
+                                else if (@opportunity.Location == LocationType.AllUkraine)
+                                {
+                                    <span><i class="fa-solid fa-location-dot"></i> Вся Україна</span>
+                                }
+                                else
+                                {
+                                    <span><i class="fa-solid fa-location-dot"></i> @opportunity.Location</span>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <div class="pagination-container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        @for (int i = 0; i < Math.Ceiling((double)Model.Total / Model.Take); i++)
+                        {
+                            <li class="page-item @(i == Model.Skip / Model.Take ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Opportunities", new OpportunitiesQueryFilters { Skip = i * Model.Take, Take = Model.Take })">@((i + 1).ToString())</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="sidebar-filters col-4">
+            <div class="filter-location">
+                <label for="location" class="location-lable">Місце проведення</label>
+                <div class="form-check">
+                    <input type="checkbox" id="remotelyCheckbox" name="LocationType" value="@LocationType.Remotely">
+                    <label for="remotelyCheckbox">Дистанційно</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="allUkraineCheckbox" name="LocationType" value="@LocationType.AllUkraine">
+                    <label for="allUkraineCheckbox">Вся Україна</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="searchLocationCheckbox" name="LocationType" value="@LocationType.AddedLocation">
+                    <label for="searchLocationCheckbox">Шукати локацію</label>
+                </div>
+                <div id="locationField" style="display: none;">
+                    <input type="text" id="location" placeholder="Введіть місце проведення...">
+                </div>
+            </div>
+            <div class="filter-category">
+                <label for="category">Категорія</label>
+                <select id="categoryFilter">
+                    <option value="">Усі</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.Name">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <button class="btn-apply-filters" type="button" id="applyFiltersBtn">Застосувати фільтри</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            const locationCheckboxes = $('input[type="checkbox"][name="LocationType"]');
+            const locationField = $('#locationField');
+            const locationInput = $('#location');
+
+            if (!getQueryParam('SortColumn')) {
+                $('#sortFilter').val('CreatedAt');
+            } else {
+                $('#sortFilter').val(getQueryParam('SortColumn'));
+            }
+
+            $('#searchFilter').val(getQueryParam('Search'));
+            $('#categoryFilter').val(getQueryParam('Category'));
+            locationCheckboxes.each(function () {
+                const checkboxValue = $(this).val();
+                const location = getQueryParam('Location');
+                if (checkboxValue === location) {
+                    $(this).prop('checked', true);
+                } else if (location && location !== '@LocationType.Remotely' && location !== '@LocationType.AllUkraine') {
+                    $('#searchLocationCheckbox').prop('checked', true);
+                    locationField.show();
+                }
+            });
+
+            locationInput.val(getQueryParam('Location'));
+
+            locationCheckboxes.change(function () {
+                locationCheckboxes.not(this).prop('checked', false);
+                if ($('#remotelyCheckbox').is(':checked')) {
+                    locationInput.val($('#remotelyCheckbox').val());
+                }
+                if ($('#allUkraineCheckbox').is(':checked')) {
+                    locationInput.val($('#allUkraineCheckbox').val());
+                }
+                if ($(this).val() !== '@LocationType.AddedLocation') {
+                    locationField.hide();
+                }
+                if ($(this).val() === '@LocationType.AddedLocation') {
+                    locationField.show();
+                }
+            });
+
+            function getQueryParam(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            function applyFilters() {
+                var sortColumn = $('#sortFilter').val();
+                var search = $('#searchFilter').val();
+                var category = $('#categoryFilter').val();
+                var location = $('#location').val();
+
+                var newUrl = updateQueryStringParameter(window.location.href, 'SortColumn', sortColumn);
+                newUrl = updateQueryStringParameter(newUrl, 'Search', search);
+                newUrl = updateQueryStringParameter(newUrl, 'Category', category);
+                newUrl = updateQueryStringParameter(newUrl, 'Location', location);
+
+                window.location.href = newUrl;
+            }
+
+            function updateQueryStringParameter(uri, key, value) {
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    return uri.replace(re, '$1' + key + "=" + value + '$2');
+                } else {
+                    return uri + separator + key + "=" + value;
+                }
+            }
+
+            $('#sortFilter').change(() => {
+                applyFilters();
+            });
+
+            $('#applyFiltersBtn').click(() => {
+                applyFilters();
+            });
+
+            $('#search-btn').click(() => {
+                applyFilters();
+            });
+            $('#searchFilter').keypress(function (event) {
+                if (event.keyCode === 13) { 
+                    applyFilters();
+                    event.preventDefault(); 
+                }
+            });
+
+            $('.opportunities').on('click', '#opportunity-item', function () {
+                var opportunityId = $(this).data('opportunity-id');
+                var url = 'Opportunity/' + opportunityId;
+                window.location.href = url;
+            });
+        });
+    </script>
+}

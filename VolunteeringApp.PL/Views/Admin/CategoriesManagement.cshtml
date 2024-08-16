@@ -1,0 +1,161 @@
+﻿@using VolunteeringApp.BLL.DTOs.Category
+@model VolunteeringApp.PL.ViewModels.Category.FilteredCategoriesViewModel
+@{
+    ViewData["Title"] = "Categories Management";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-table">
+    <div class="filters">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="filter-search">
+                    <input type="text" class="form-control" id="searchFilter" placeholder="Пошук категорії..." />
+                    <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <button class="addCategoryBtn">Додати категорію</button>
+    </div>
+    <table id="categoriesTable" class="display">
+        <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model.Categories)
+            {
+                <tr>
+                    <td><span class="editable-category" data-id="@category.Id">@category.Name</span></td>
+                    <td class="action-buttons">
+                        <button class="editCategoryBtn" data-id="@category.Id">Редагувати</button>
+                        <button class="deleteCategoryBtn" data-id="@category.Id">Видалити</button>
+                    </td>
+                </tr>
+            }
+            <tr id="newCategoryRow" style="display:none;">
+                <td><input type="text" id="newCategoryName" placeholder="Ведіть назву нової категорії" /></td>
+                <td class="action-buttons">
+                    <button class="saveCategoryBtn">Зберегти</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                @for (int i = 0; i < Math.Ceiling((double)Model.Total / Model.Take); i++)
+                {
+                    <li class="page-item @(i == Model.Skip / Model.Take ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("CategoriesManagement", new CategoriesQueryFilters { Skip = i * Model.Take, Take = Model.Take })">@((i + 1).ToString())</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(() => {
+
+            function getQueryParam(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            $('#searchFilter').val(getQueryParam('Search'));
+
+            function applyFilters() {
+                var search = $('#searchFilter').val();
+                window.location.href = updateQueryStringParameter(window.location.href, 'Search', search);
+            }
+
+            function updateQueryStringParameter(uri, key, value) {
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    return uri.replace(re, '$1' + key + "=" + value + '$2');
+                } else {
+                    return uri + separator + key + "=" + value;
+                }
+            }
+
+            $('#search-btn').click(() => {
+                applyFilters();
+            });
+
+            $('.addCategoryBtn').on('click', function () {
+                $('#newCategoryRow').show();
+            });
+
+            $('.saveCategoryBtn').on('click', function () {
+                const categoryName = $('#newCategoryName').val();
+                if (categoryName) {
+                    $.ajax({
+                        url: '/api/Admin/AddCategory',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ name: categoryName }),
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert('Error adding category. Please try again.');
+                        }
+                    });
+                }
+            });
+            $('.deleteCategoryBtn').on('click', function () {
+                const categoryId = $(event.target).data('id');
+                if (categoryId) {
+                    $.ajax({
+                        url: '/api/Admin/DeleteCategory/' + categoryId,
+                        method: 'DELETE',
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert('Error adding category. Please try again.');
+                        }
+                    });
+                }
+            });
+
+            $('.editCategoryBtn').on('click', function () {
+                const button = event.target;
+                const categoryRow = button.closest('tr');
+                const categoryNameCell = categoryRow.querySelector('.editable-category');
+
+                if (button.textContent === 'Редагувати') {
+                    categoryNameCell.contentEditable = true;
+                    button.textContent = 'Зберегти';
+                } else {
+                    const categoryId = categoryNameCell.dataset.id;
+                    const newName = categoryNameCell.textContent;
+
+                    $.ajax({
+                        url: '/api/Admin/EditCategory/' + categoryId,
+                        method: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ name: newName }),
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert('Error adding category. Please try again.');
+                        }
+                    });
+
+                    categoryNameCell.contentEditable = false;
+                    button.textContent = 'Редагувати';
+                }
+            });
+        });
+    </script>
+}
